@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_restaurant/view_model/restaurant_index.dart';
 
-class MyApp extends StatefulWidget {
+void main(List<String> args) {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      debugShowCheckedModeBanner: false,
+      title: "Food App",
+      home: RestaurantIndex(),
     );
   }
 }
