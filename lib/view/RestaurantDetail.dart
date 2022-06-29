@@ -79,6 +79,7 @@ class _RestaurantDetailState extends State<RestaurantDetail> {
             ),
             SizedBox(height: 5),
             Expanded(
+                flex: 1,
                 child: ListView.builder(
                     itemCount: widget.restaurants.menus!.foods!.length,
                     itemBuilder: (_, index) {

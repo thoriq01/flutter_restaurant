@@ -32,7 +32,6 @@ class _RestaurantIndexState extends State<RestaurantIndex> {
 
   int _selectedRestaurant = -1;
   bool _isSelectedRestaurant = false;
-  List<String> _foodName = [];
   var _restaurant = Restaurants();
   @override
   void initState() {
@@ -103,55 +102,53 @@ class _RestaurantIndexState extends State<RestaurantIndex> {
             SizedBox(height: 15),
             Container(
               height: 40,
-              child: Expanded(
-                child: FutureBuilder<List<Restaurants>?>(
-                  future: _loadRestaurant(),
-                  builder: (_, snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return Text("Loading");
-                      case ConnectionState.done:
-                        return ListView.builder(
-                          padding: EdgeInsets.all(5),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: (_, index) {
-                            if (snapshot.data!.length < 0) {
-                              return Text("Loading");
-                            } else {
-                              return Container(
-                                height: 30,
-                                width: 140,
-                                margin: EdgeInsets.only(right: 5),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      _restaurant = new Restaurants();
-                                      _selectedRestaurant = index;
-                                      _isSelectedRestaurant = true;
-                                      _restaurant = _listRestaurant[index];
-                                    });
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: _selectedRestaurant == index ? Colors.black : Colors.grey.shade100,
-                                        borderRadius: BorderRadius.circular(20)),
-                                    child: Center(
-                                      child: Text(
-                                        snapshot.data![index].name!,
-                                        style: TextStyle(color: _selectedRestaurant == index ? Colors.white : Colors.deepOrange, fontSize: 12),
-                                      ),
+              child: FutureBuilder<List<Restaurants>?>(
+                future: _loadRestaurant(),
+                builder: (_, snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                      return Text("Loading");
+                    case ConnectionState.done:
+                      return ListView.builder(
+                        padding: EdgeInsets.all(5),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (_, index) {
+                          if (snapshot.data!.length < 0) {
+                            return Text("Loading");
+                          } else {
+                            return Container(
+                              height: 30,
+                              width: 140,
+                              margin: EdgeInsets.only(right: 5),
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _restaurant = new Restaurants();
+                                    _selectedRestaurant = index;
+                                    _isSelectedRestaurant = true;
+                                    _restaurant = _listRestaurant[index];
+                                  });
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: _selectedRestaurant == index ? Colors.black : Colors.grey.shade100,
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: Center(
+                                    child: Text(
+                                      snapshot.data![index].name!,
+                                      style: TextStyle(color: _selectedRestaurant == index ? Colors.white : Colors.deepOrange, fontSize: 12),
                                     ),
                                   ),
                                 ),
-                              );
-                            }
-                          },
-                        );
-                    }
-                    return Text("data");
-                  },
-                ),
+                              ),
+                            );
+                          }
+                        },
+                      );
+                  }
+                  return Text("data");
+                },
               ),
             ),
             SizedBox(height: 15),
@@ -171,62 +168,62 @@ class _RestaurantIndexState extends State<RestaurantIndex> {
             SizedBox(height: 15),
             Builder(builder: (_) {
               if (_isSelectedRestaurant == true) {
-                return Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "Daftar Menu Makanan",
-                        style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w700),
-                      ),
-                      SizedBox(height: 10),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: _restaurant.menus!.foods!.length,
-                          itemBuilder: (_, i) {
-                            if (_restaurant.menus!.foods != null) {
-                              return Container(
-                                child: Text(_restaurant.menus!.foods![i].name!),
-                              );
-                            } else {
-                              return Container(
-                                child: Text("Loading Data"),
-                              );
-                            }
-                          },
-                        ),
-                      ),
-                      Text(
-                        "Daftar Menu Minuman",
-                        style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w700),
-                      ),
-                      SizedBox(height: 10),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: _restaurant.menus!.drinks!.length,
-                          itemBuilder: (_, i) {
+                return Flex(
+                  direction: Axis.vertical,
+                  children: [
+                    Text(
+                      "Daftar Menu Makanan",
+                      style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w700),
+                    ),
+                    SizedBox(height: 10),
+                    SizedBox(
+                      height: 100,
+                      child: ListView.builder(
+                        itemCount: _restaurant.menus!.foods!.length,
+                        itemBuilder: (_, i) {
+                          if (_restaurant.menus!.foods != null) {
                             return Container(
-                              child: Text(_restaurant.menus!.drinks![i].name!),
+                              child: Text(_restaurant.menus!.foods![i].name!),
                             );
-                          },
-                        ),
+                          } else {
+                            return Container(
+                              child: Text("Loading Data"),
+                            );
+                          }
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                    Text(
+                      "Daftar Menu Minuman",
+                      style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w700),
+                    ),
+                    SizedBox(height: 10),
+                    SizedBox(
+                      height: 200,
+                      child: ListView.builder(
+                        itemCount: _restaurant.menus!.drinks!.length,
+                        itemBuilder: (_, i) {
+                          return Container(
+                            child: Text(_restaurant.menus!.drinks![i].name!),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 );
               } else {
-                return Expanded(
-                  child: FutureBuilder<List<Restaurants>?>(
-                    future: _loadRestaurant(),
-                    builder: (context, snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.waiting:
-                          return Center(
-                            child: Text("Loading Restaurant"),
-                          );
-                        case ConnectionState.done:
-                          return GridView.builder(
+                return FutureBuilder<List<Restaurants>?>(
+                  future: _loadRestaurant(),
+                  builder: (context, snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return Center(
+                          child: Text("Loading Restaurant"),
+                        );
+                      case ConnectionState.done:
+                        return Expanded(
+                          child: GridView.builder(
+                            shrinkWrap: true,
                             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
                               mainAxisSpacing: 10,
@@ -249,14 +246,14 @@ class _RestaurantIndexState extends State<RestaurantIndex> {
                                 ),
                               );
                             },
-                          );
-                      }
-                      return Text("");
-                    },
-                  ),
+                          ),
+                        );
+                    }
+                    return Text("");
+                  },
                 );
               }
-            })
+            }),
           ],
         ),
       ),
