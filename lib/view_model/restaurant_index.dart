@@ -6,6 +6,7 @@ import 'package:flutter_restaurant/models/api/RestaurantApi.dart';
 import 'package:flutter_restaurant/models/repository/RestaurantRepository.dart';
 import 'package:flutter_restaurant/view/RestaurantCard.dart';
 import 'package:flutter_restaurant/view/RestaurantDetail.dart';
+import 'package:sizer/sizer.dart';
 
 // ignore: must_be_immutable
 class RestaurantIndex extends StatefulWidget {
@@ -53,14 +54,13 @@ class _RestaurantIndexState extends State<RestaurantIndex> {
             children: [
               Text(
                 "Cari Menu Favoritmu Disini",
-                style: TextStyle(color: Colors.deepOrange, fontSize: 24, fontWeight: FontWeight.w700),
+                style: TextStyle(color: Colors.deepOrange, fontSize: 18.sp, fontWeight: FontWeight.w700),
               ),
+              SizedBox(height: 10),
               TextFormField(
                 controller: _foodTextController,
                 onChanged: (value) {
-                  Future.delayed(Duration(milliseconds: 500), () {
-                    var c = _listRestaurant.first.name!.toLowerCase().contains(_foodTextController.text);
-                  });
+                  Future.delayed(Duration(milliseconds: 500), () {});
                 },
                 decoration: InputDecoration(
                     hintText: "Cari makanan favoritmu disini",
@@ -68,17 +68,18 @@ class _RestaurantIndexState extends State<RestaurantIndex> {
                     prefixIcon: Icon(
                       Icons.search,
                       color: Colors.black,
-                      size: 30,
+                      size: 20.sp,
                     ),
                     filled: true,
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide.none)),
               ),
+              SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     "Filter Restaurant",
-                    style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w700),
+                    style: TextStyle(color: Colors.black, fontSize: 14.sp, fontWeight: FontWeight.w700),
                   ),
                   _isSelectedRestaurant == true
                       ? TextButton(
@@ -94,7 +95,7 @@ class _RestaurantIndexState extends State<RestaurantIndex> {
                       : Text(""),
                 ],
               ),
-              SizedBox(height: 15),
+              SizedBox(height: 10),
               Container(
                 height: 40,
                 child: FutureBuilder<List<Restaurants>?>(
@@ -113,8 +114,7 @@ class _RestaurantIndexState extends State<RestaurantIndex> {
                               return Text("Loading");
                             } else {
                               return Container(
-                                height: 30,
-                                width: 140,
+                                width: 25.w,
                                 margin: EdgeInsets.only(right: 5),
                                 child: GestureDetector(
                                   onTap: () {
@@ -126,9 +126,10 @@ class _RestaurantIndexState extends State<RestaurantIndex> {
                                     });
                                   },
                                   child: Container(
+                                    width: 20.w,
                                     decoration: BoxDecoration(
                                         color: _selectedRestaurant == index ? Colors.black : Colors.grey.shade100,
-                                        borderRadius: BorderRadius.circular(20)),
+                                        borderRadius: BorderRadius.circular(20.sp)),
                                     child: Center(
                                       child: Text(
                                         snapshot.data![index].name!,
@@ -164,12 +165,12 @@ class _RestaurantIndexState extends State<RestaurantIndex> {
                                 SizedBox(height: 15),
                                 Text(
                                   _restaurant.name!,
-                                  style: TextStyle(color: Colors.deepOrange, fontSize: 18, fontWeight: FontWeight.w700),
+                                  style: TextStyle(color: Colors.deepOrange, fontSize: 18.sp, fontWeight: FontWeight.w700),
                                 ),
                                 SizedBox(height: 15),
                                 Text(
                                   "Daftar Menu Makanan",
-                                  style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w700),
+                                  style: TextStyle(color: Colors.black, fontSize: 14.sp, fontWeight: FontWeight.w700),
                                 ),
                                 SizedBox(height: 10),
                                 Expanded(
@@ -215,6 +216,7 @@ class _RestaurantIndexState extends State<RestaurantIndex> {
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             mainAxisSpacing: 10,
+                            childAspectRatio: 0.9,
                             crossAxisSpacing: 4,
                           ),
                           padding: EdgeInsets.all(8),

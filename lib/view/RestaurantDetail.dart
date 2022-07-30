@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant/models/repository/RestaurantRepository.dart';
+import 'package:sizer/sizer.dart';
 
 class RestaurantDetail extends StatefulWidget {
   final Restaurants restaurants;
@@ -27,6 +28,7 @@ class _RestaurantDetailState extends State<RestaurantDetail> {
                 borderRadius: BorderRadius.circular(10),
                 child: Image(
                   image: NetworkImage(widget.restaurants.pictureId!),
+                  width: 100.w,
                 ),
               ),
               SizedBox(height: 15),
@@ -36,17 +38,17 @@ class _RestaurantDetailState extends State<RestaurantDetail> {
                 children: [
                   Text(
                     widget.restaurants.name!,
-                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 20),
+                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 14.sp),
                   ),
                   Text(
                     widget.restaurants.city!,
-                    style: TextStyle(color: Colors.grey[900], fontSize: 14),
+                    style: TextStyle(color: Colors.grey[900], fontSize: 12.sp),
                   ),
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: [Icon(Icons.star, color: Colors.deepOrange, size: 18), SizedBox(width: 5), Text(widget.restaurants.rating!.toString())],
+                children: [Icon(Icons.star, color: Colors.deepOrange, size: 6.w), SizedBox(width: 5), Text(widget.restaurants.rating!.toString())],
               ),
               SizedBox(height: 15),
               Text(
